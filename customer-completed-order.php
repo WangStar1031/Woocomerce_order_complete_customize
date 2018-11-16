@@ -73,12 +73,17 @@ function updateUser($_eMail, $_lstTokens){
 			}
 		}
 		$newVal->expDate = date("Y-m-d", strtotime(date("Y-m-d") . $expPeriod));
+		$isInclude = false;
 		foreach ($arrTokens as $curToken) {
 			if( strcasecmp( $curToken->product_name, $product_name) == 0){
 				// $newVal->expDate = date("Y-m-d", strtotime( $curToken->expDate . $expPeriod));
 				$curToken->expDate = $newVal->expDate;
 				$curToken->token = $newVal->token;
+				$isInclude = true;
 			}
+		}
+		if( $isInclude == false){
+			$arrTokens[] = $newVal;
 		}
 		$retVal[] = $newVal;
 	}
